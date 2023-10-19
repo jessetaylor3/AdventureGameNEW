@@ -88,9 +88,24 @@ public class InventoryHandler {
 			}
 			
 			//Handle logic of first menu (Items...Return)
-			switch (userInput) {
-			case "1":
-				
+			if (userChoice > 0 && userChoice <= Inventory.getMaxSlots()){
+				//If user has selected an inventory slot
+				if (userChoice <= inventory.getItems().size()) {
+					//There is an item at the selected slot
+					Item selectedItem = inventory.getItems().get(userChoice - 1); //-1 Becuase index starts at 0
+					
+					//Manage ITEM NOT IMPLEMENTED
+					manageItem(selectedItem, inventory, inputHandler);
+				} else {
+					//The selected slot is empty
+					Utilities.slowPrint("The selected slot is empty.");
+				}
+			} else if (userChoice == Inventory.getMaxSlots() + 1) {
+				//User has chosen to leave menu
+				break;
+			} else {
+				//User has entered an invalid number
+				Utilities.slowPrint("Invalid option, please choose again.");
 			}
 			
 			
