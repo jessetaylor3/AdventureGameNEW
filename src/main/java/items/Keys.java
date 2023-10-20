@@ -6,7 +6,7 @@ public class Keys extends Item {
 //	private KeyType keyType;
 	private boolean isReusable;
 	
-	//Constructor for smallKey
+	//Constructor for Key
 	public Keys(String name, String description) {
 		super(name, description, false); 
 	}
@@ -19,7 +19,7 @@ public class Keys extends Item {
 	//Methods for Keys
 	@Override
 	public void use() {
-		String message = "You use the " + getName() + " to unlock the chest?";
+		String message = "You try to use the " + getName() + ".";
 		Utilities.slowPrint(message);
 	}
 }

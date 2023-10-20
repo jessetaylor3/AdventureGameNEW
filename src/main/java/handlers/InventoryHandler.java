@@ -6,7 +6,7 @@ import utilities.Utilities;
 
 public class InventoryHandler {
 	//Static method so an instance of Inventory Handler doesn't need to be created
-	public static void discoverItem(Item item, Inventory inventory, InputHandler inputHandler) {
+	public static boolean discoverItem(Item item, Inventory inventory, InputHandler inputHandler) {
 		//Manage state of itemHandled
 		boolean itemHandled = false;
 		
@@ -21,7 +21,7 @@ public class InventoryHandler {
 			System.out.println("3. Open inventory.");
 			
 			String userInput = inputHandler.getUserInput();
-			
+				
 			//Process user choice
 			switch (userInput) {
 			case "1": //Try to pickup item
@@ -30,6 +30,7 @@ public class InventoryHandler {
 					message = "You have picked up the " + item.getName() + ".";
 					Utilities.slowPrint(message);
 					itemHandled = true;
+					return true;
 				} else {
 					Utilities.slowPrint("Your inventory is full.\n"
 							+ "You can drop an item or leave this one behind.");
@@ -45,12 +46,16 @@ public class InventoryHandler {
 			case "3": //Open inventory
 				Utilities.slowPrint("Opening inventory...");
 				//Logic for displaying and managing inventory
+				manageInventory(inventory, inputHandler);
+				break;
 				
 			default:
 				Utilities.slowPrint("Invalid option, please choose again.");
 				break;
 			}
-		}	
+		}
+		
+		return false; //Item was not picked up
 	}
 	
 	//Method to manage inventory items
@@ -95,7 +100,7 @@ public class InventoryHandler {
 					Item selectedItem = inventory.getItems().get(userChoice - 1); //-1 Becuase index starts at 0
 					
 					//Manage ITEM NOT IMPLEMENTED
-					manageItem(selectedItem, inventory, inputHandler);
+					ItemHandler.manageItem(selectedItem, inventory, inputHandler);
 				} else {
 					//The selected slot is empty
 					Utilities.slowPrint("The selected slot is empty.");
@@ -107,8 +112,6 @@ public class InventoryHandler {
 				//User has entered an invalid number
 				Utilities.slowPrint("Invalid option, please choose again.");
 			}
-			
-			
 		}
 	}
 }

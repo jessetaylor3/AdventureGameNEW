@@ -21,12 +21,16 @@ public class Main {
 		DungeonRoom dungeonRoom = DungeonRoom.getInstance(); //Get the only instance of dungeonRoom
 		dungeonRoom.enterRoom(player, inputHandler);
 		
-		//Goblin encounter test
-		Goblin g1 = new Goblin();
 		
-		//Start combat
-		CombatHandler combatHandler = new CombatHandler();
-		combatHandler.startCombat(player, g1, inputHandler);
+		
+		
+		
+//		//Goblin encounter test
+//		Goblin g1 = new Goblin();
+//		
+//		//Start combat
+//		CombatHandler combatHandler = new CombatHandler();
+//		combatHandler.startCombat(player, g1, inputHandler);
 		
 		
 		
