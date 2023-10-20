@@ -36,26 +36,38 @@ public class Chest extends ObjectInRoom{
 	}
 	
 	@Override
-	public void interactWith(Inventory inventory, InputHandler inputHandler) {
-		//Logic for interacting with the chest
-		if (this.isLocked) {
-			Utilities.slowPrint("\nThe chest is locked. You need the right key to open it.");
-		} else {
-			Utilities.slowPrint("\nYou open the chest and look inside.");
-			//One more list to track items that were picked up and to be removed from chest
-			List<Item> itemsToRemove = new ArrayList<>();
-			
-			//Iterate through items in chest
-			for (Item item : itemsInside) {
-				//Boolean to check if the method is successful
-				boolean wasPickedUp = InventoryHandler.discoverItem(item, inventory, inputHandler);
-				if (wasPickedUp) {
-					itemsToRemove.add(item);
-				}
-			}
-			//Items that were picked up are removed from chest
-			itemsInside.removeAll(itemsToRemove);
-			
-		}
+	public void interactWith(Player player, InputHandler inputHandler) {
+	    // Logic for interacting with the chest
+	    if (this.isLocked) {
+	        Utilities.slowPrint("\nThe chest is locked. You need the right key to open it.");
+	    } else {
+	        // Check if the chest is empty
+	        if (this.itemsInside.isEmpty()) {
+	            Utilities.slowPrint("\nYou open the chest, but it's empty.");
+	        } else {
+	            Utilities.slowPrint("\nYou open the chest and look inside.");
+
+	            // One more list to track items that were picked up and to be removed from chest
+	            List<Item> itemsToRemove = new ArrayList<>();
+
+	            // Iterate through items in chest
+	            for (Item item : itemsInside) {
+	                // Boolean to check if the method is successful
+	                boolean wasPickedUp = InventoryHandler.discoverItem(item, player, inputHandler);
+	                if (wasPickedUp) {
+	                    itemsToRemove.add(item);
+	                }
+	            }
+
+	            // Items that were picked up are removed from chest
+	            itemsInside.removeAll(itemsToRemove);
+
+	            // If all items were picked up and the chest is now empty, print a message.
+	            if (itemsInside.isEmpty()) {
+	                Utilities.slowPrint("\nYou've taken everything from the chest.");
+	            }
+	        }
+	    }
 	}
+
 }

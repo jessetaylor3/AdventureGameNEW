@@ -20,5 +20,5 @@ public abstract class ObjectInRoom{
 	}
 	
 	//Meant to be overwritten by subclasses
-	public abstract void interactWith(Inventory inventory, InputHandler inputHandler);
+	public abstract void interactWith(Player player, InputHandler inputHandler);
 }

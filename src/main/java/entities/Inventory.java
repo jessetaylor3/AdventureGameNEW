@@ -1,6 +1,4 @@
 package entities;
-import utilities.*;
-import handlers.*;
 import items.Item;
 
 import java.util.ArrayList;

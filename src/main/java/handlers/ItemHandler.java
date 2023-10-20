@@ -6,7 +6,7 @@ import utilities.*;
 public class ItemHandler {
 	
 	//Static method to handle logic for Player interacting with object
-	public static void manageItem(Item item, Inventory inventory, InputHandler inputHandler) {
+	public static void manageItem(Item item, Player player, InputHandler inputHandler) {
 		while (true) {
 			//Display inventory item selected and relevant options
 			String message = "\nYou selected: " + item.getName() + ".\n";
@@ -23,11 +23,11 @@ public class ItemHandler {
 			switch (userInput) {
 			case "1":
 				//Logic for using the item
-				item.use(); //The item should know how to use itself
+				item.use(player); //The item should know how to use itself
 				
 				//Remove item from inventory if it's a one time use
 				if (!item.isReusable()) {
-					inventory.removeItem(item);
+					player.getInventory().removeItem(item);
 				}
 				return;
 				
@@ -38,7 +38,7 @@ public class ItemHandler {
 			
 			case "3":
 				//Logic for dropping the item
-				inventory.removeItem(item);
+				player.getInventory().removeItem(item);
 				
 				//Message for the dropped item
 				message = "You dropped the " + item.getName() + ".";

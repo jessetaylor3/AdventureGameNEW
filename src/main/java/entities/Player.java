@@ -10,6 +10,7 @@ public class Player {
 	private int health;
 	private int strength;
 	private int armor;
+	private String secretPassword;
 	private Inventory inventory;
 	
 	//Player constructor
@@ -55,12 +56,12 @@ public class Player {
 	public void takeDamage(int damage) {
 		//Subtract damage from Player health less armor
 		int reducedDamage = Math.max(0, damage - armor);
-		health -= reducedDamage;
+		this.health -= reducedDamage;
 		
 		//Display message with damage taken if alive
 		if (isAlive()) {
 			String message = "\nYou've lost " + reducedDamage + " health.\n"
-					+ "Remaining health: " + health;
+					+ "Remaining health: " + this.health;
 			Utilities.slowPrint(message);
 		} else { //If not alive print GAME OVER message
 			Utilities.clearConsole();
@@ -69,6 +70,21 @@ public class Player {
 		}
 	}
 	
+	//Method for Player to use
+	public void heal(int healing) {
+		//Check if will exceed 100
+		if (this.health + healing <= 100) {
+			this.health += healing;
+			String message = "\nYou've gained " + healing + " health.\n"
+					+ "Current health: " + this.health;
+			Utilities.slowPrint(message);		
+		} else {
+			//If it would exceed, set health to 100
+			this.health = 100;
+			Utilities.slowPrint("You've gained more than enough health."
+					+ "\nCurrent health: 100");
+		}
+	}
 	//Attack message
 	public String attackMessage(Enemy enemy) {
 		return "\nYou attack the " + enemy.getName() + "."; 
@@ -82,4 +98,13 @@ public class Player {
 	public Inventory getInventory() {
 		return inventory;
 	}
+	
+	public void setPassword(String password) {
+		this.secretPassword = password;
+	}
+	
+	public String getPassword() {
+		return secretPassword;
+	}
+	
 }

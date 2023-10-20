@@ -8,20 +8,19 @@ import java.util.List;
 import java.util.ArrayList;
 import items.*;
 import world.*;
+import items.consumables.Healing;
 
 public class DungeonRoom extends Room {
 	//Static variable single_instance of type DungeonRoom
 	private static DungeonRoom single_instance = null;
 	
 	//Additional properties
-	private boolean isThumbBroken;
+	private boolean handcuffsOn;
+	private String playerPosition; // center, door, chest, painting, wall
 	
 	//List for items and objects in room
 	private List<Item> itemsInRoom;
 	private List<ObjectInRoom> objectsInRoom;
-	
-	//Map holding possible directions
-//	private Map<String, Room> connectedRooms;
 	
 	//Static method to create instance of DungeonRoom class
 	public static DungeonRoom getInstance() {
@@ -34,39 +33,46 @@ public class DungeonRoom extends Room {
 	//DungeonRoom Constructor
 	private DungeonRoom() {
 		super("Dungeon", "This is a dark and scary dungeon.");
-		this.isThumbBroken = false;
-		
-		//Initialize the items and objects in the room
-		this.itemsInRoom = new ArrayList<>();
-		this.objectsInRoom = new ArrayList<>();
+		this.handcuffsOn = true; //Player starts with handcuffs
+		this.itemsInRoom = new ArrayList<>(); //Initialize list for items in room
+		this.objectsInRoom = new ArrayList<>(); //Initialize list for objects in room
+		this.playerPosition = "center";
 		setupRoom();
 	}
 	
 	//Method to setup items and objects in room
 	private void setupRoom() {
+		List<Item> itemsInChest = new ArrayList<>();
+		
 		//Create items
+		Keys largeKey = new Keys("Large Key", "It describes itself.");
 		Keys smallKey = new Keys("Small Key", "It's what it says it is...");
-		//Add items to itemsInRoom
-		itemsInRoom.add(smallKey);
+		Healing splint = new Healing("Splint", "a small splint used for bone fractures.", false, 0);
+		
+		//Would use itemsInRoom for items that are accessible. All items right now are hidden
+		
+		//Put some items in chest
+		itemsInChest.add(largeKey);
+		itemsInChest.add(splint);
 		
 		//Create objects
-		
-		//Chest creation
-		List<Item> itemsInChest = new ArrayList<>();
-//		Item goldCoin = new Item("Gold Coin", "A shiny gold coin.");
-		//TODO - This is just a filler key item for the chest to test code
-		Item largeKey = new Keys("Large Key", "It describes itself.");
-		itemsInChest.add(largeKey);
-		
+		this.objectsInRoom.add(new Door("Old barred door", "heavy door with old bars and a large keyhole.", true, largeKey));
+		this.objectsInRoom.add(new Painting("Dusty Painting", "dusty painting with a faded noble figure."));
 		Chest smallChest = new Chest(
 				"Small Chest",
-				"a small steel chest with a lock.",
+				"small steel chest with a lock.",
 				true,
 				smallKey,
 				itemsInChest
 				);
+		BrickWall brickWall = new BrickWall(
+				"Brick Wall",
+				"old brick wall.",
+				smallKey);
+				
 		//Add all room objects and chest(s)
 		objectsInRoom.add(smallChest);
+		objectsInRoom.add(brickWall);
 	}
 	
 	//THIS METHOD WILL EVENTUALLY RUN ALL ROOM METHODS
@@ -75,6 +81,12 @@ public class DungeonRoom extends Room {
 		Utilities.clearConsole();
 		Utilities.slowPrint(getDescription());
 		intro(player, inputHandler);
+		
+		boolean playerWantsToLeave = false;
+		while (!playerWantsToLeave) {
+			String userInput = showOptions(inputHandler);
+			playerWantsToLeave = processChoice(userInput, player, inputHandler);
+		}
 	}
 	
 	//Room Introduction
@@ -92,11 +104,11 @@ public class DungeonRoom extends Room {
 			break;
 			
 		case "2":
-			Utilities.slowPrint("It's hard to do this in handcuffs, but you don't feel anything in your pockets");
+			Utilities.slowPrint("\nIt's hard to do this in handcuffs, but you don't feel anything in your pockets");
 			break;
 			
 		case "3":
-			//TODO attemptToSlipHandcuffs(player, inputHandler);
+			attemptToSlipHandcuffs(player, inputHandler);
 			break;
 			
 		default:
@@ -106,6 +118,102 @@ public class DungeonRoom extends Room {
 		}
 	}
 	
+	//ShowOptions based on player specifics and pass this to processChoice method
+	private String showOptions(InputHandler inputHandler) {
+		String message = "You are at the " + this.playerPosition + ".\nWhat would you like to do?";
+		Utilities.slowPrint(message);
+		String options;
+		
+		//Logic for handcuffs still being on
+		if (this.handcuffsOn) {
+			options = "1. Try to slip out of handcuffs\n2. Scream for help\n3. Do nothing";
+		} else {
+			switch (this.playerPosition) {
+			case "center":
+				options = "1. Go forward to the door\n2. Go left to the chest\n3. Go backward to the painting\n"
+						+ "4. Go right to the brick wall\n5. Look around\n6. Manage Inventory";
+				break;
+			
+			case "door":
+				//Options when at door
+				options = "TODO";
+				break;
+				
+			case "chest":
+				//Options when at chest
+				options = "TODO";
+				break;
+				
+			case "painting":
+				//Options when at painting
+				options = "TODO";
+				break;
+				
+			case "wall":
+				//Options when at brick wall
+				options = "TODO";
+				break;
+				
+			default:
+				options = "Invalid position. This should never happen.";
+				break;
+			}
+		}
+		//Display options and get userInput
+		System.out.println("\n" + options);
+		String userInput = inputHandler.getUserInput();
+		return userInput;
+	}
+	
+	//ProcessChoice uses showOptions to gather userChoice
+	private boolean processChoice(String userInput, Player player, InputHandler inputHandler) {
+		if (this.handcuffsOn) {
+			switch (userInput) {
+			case "1":
+				attemptToSlipHandcuffs(player, inputHandler);
+				return false; //Player stays in room
+			
+			case "2":
+				Utilities.slowPrint("You scream for help. But nobody comes...");
+				return false; //Player stays in room
+				
+			case "3":
+				Utilities.slowPrint("You do nothing...");
+				return false; //Player stays in room
+				
+			default:
+				Utilities.slowPrint("Invalid coice. Please select again.");
+				return false; //Player stays in room
+			}
+		} else {
+			switch (this.playerPosition) {
+			case "center":
+				//TODO
+				handleCenterChoices(userInput);
+				return false; //Player stays in room
+				
+			case "door":
+				//TODO
+				
+			case "chest":
+				//TODO
+				
+			case "painting":
+				//TODO
+				
+			case "wall":
+				//TODO
+				handleSpecificPositionChoices(userInput, player, inputHandler);
+				return false; //Player stays in room
+				
+			default:
+				Utilities.slowPrint("Invalid choice. Please select again.");
+				return false;
+			}
+		}
+	}
+	
+	
 	//Look around method
 	private void lookAround() {
 		Utilities.slowPrint("\nIt's too dark to see much, but you can just barely make out some shapes in the darkness...");
@@ -113,13 +221,25 @@ public class DungeonRoom extends Room {
 			String message = "You see a " + object.getDescription() + ".";
 			Utilities.slowPrint(message);
 		}
-		
+	}
+	
+	//Logic for breaking out of the handcuffs
+	private void attemptToSlipHandcuffs(Player player, InputHandler inputHandler) {
+		Utilities.slowPrint("\nYou try to slip the handcuffs. It's painful and they're tight");
+		Utilities.slowPrint("\nWould you like to dislocate your thumb to try and escape? (Y/N)");
+		if ("Y".equalsIgnoreCase(inputHandler.getUserInput())) {
+			Utilities.slowPrint("\n....with a scream and a crack, you dislocate your thumb and your hands slip free!");
+			this.handcuffsOn = false;
+			player.takeDamage(10);
+		} else {
+			Utilities.slowPrint("\nYou decide to endure... the handcuffs remain on.");
+		}
 	}
 	
 	
 	
 	//Getters and Setters
-	public boolean isThumbBroken() {
-		return isThumbBroken;
+	public boolean handcuffsOn() {
+		return handcuffsOn;
 	}
 }

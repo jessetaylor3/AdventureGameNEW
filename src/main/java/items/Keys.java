@@ -1,5 +1,5 @@
 package items;
-
+import entities.*;
 import utilities.Utilities;
 
 public class Keys extends Item {
@@ -18,7 +18,7 @@ public class Keys extends Item {
 	
 	//Methods for Keys
 	@Override
-	public void use() {
+	public void use(Player player) {
 		String message = "You try to use the " + getName() + ".";
 		Utilities.slowPrint(message);
 	}

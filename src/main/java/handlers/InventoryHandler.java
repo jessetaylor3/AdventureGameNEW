@@ -6,7 +6,7 @@ import utilities.Utilities;
 
 public class InventoryHandler {
 	//Static method so an instance of Inventory Handler doesn't need to be created
-	public static boolean discoverItem(Item item, Inventory inventory, InputHandler inputHandler) {
+	public static boolean discoverItem(Item item, Player player, InputHandler inputHandler) {
 		//Manage state of itemHandled
 		boolean itemHandled = false;
 		
@@ -25,7 +25,7 @@ public class InventoryHandler {
 			//Process user choice
 			switch (userInput) {
 			case "1": //Try to pickup item
-				boolean added = inventory.addItem(item);
+				boolean added = player.getInventory().addItem(item);
 				if (added) {
 					message = "You have picked up the " + item.getName() + ".";
 					Utilities.slowPrint(message);
@@ -46,7 +46,7 @@ public class InventoryHandler {
 			case "3": //Open inventory
 				Utilities.slowPrint("Opening inventory...");
 				//Logic for displaying and managing inventory
-				manageInventory(inventory, inputHandler);
+				manageInventory(player, inputHandler);
 				break;
 				
 			default:
@@ -59,7 +59,7 @@ public class InventoryHandler {
 	}
 	
 	//Method to manage inventory items
-	public static void manageInventory(Inventory inventory, InputHandler inputHandler) {
+	public static void manageInventory(Player player, InputHandler inputHandler) {
 		while (true) {
 			Utilities.slowPrint("\nInventory:\n");
 			
@@ -67,7 +67,7 @@ public class InventoryHandler {
 			int index = 1;
 			
 			//Loop to display inventory items
-			for (Item item : inventory.getItems()) {
+			for (Item item : player.getInventory().getItems()) {
 				System.out.println(index + ". " + item.getName());;
 				index ++; //Iterate
 			}
@@ -95,12 +95,12 @@ public class InventoryHandler {
 			//Handle logic of first menu (Items...Return)
 			if (userChoice > 0 && userChoice <= Inventory.getMaxSlots()){
 				//If user has selected an inventory slot
-				if (userChoice <= inventory.getItems().size()) {
+				if (userChoice <= player.getInventory().getItems().size()) {
 					//There is an item at the selected slot
-					Item selectedItem = inventory.getItems().get(userChoice - 1); //-1 Becuase index starts at 0
+					Item selectedItem = player.getInventory().getItems().get(userChoice - 1); //-1 Becuase index starts at 0
 					
 					//Manage ITEM NOT IMPLEMENTED
-					ItemHandler.manageItem(selectedItem, inventory, inputHandler);
+					ItemHandler.manageItem(selectedItem, player, inputHandler);
 				} else {
 					//The selected slot is empty
 					Utilities.slowPrint("The selected slot is empty.");

@@ -1,4 +1,5 @@
 package items;
+import entities.*;
 
 public abstract class Item {
 	//Attributes that all Item will use
@@ -27,5 +28,5 @@ public abstract class Item {
 	}
 	
 	//Abstract method to be implemented by subclass
-	public abstract void use();
+	public abstract void use(Player player);
 }
