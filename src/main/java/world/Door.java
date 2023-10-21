@@ -32,11 +32,25 @@ public class Door extends ObjectInRoom{
 	
 	@Override
 	public void interactWith(Player player, InputHandler inputHandler) {
-		//Logic for interacting with the door
-		if (this.isLocked) {
-			Utilities.slowPrint("\nThe door is locked. You need the right key to open it");
-		} else {
-			Utilities.slowPrint("\nYou open the door and proceed through.");
-		}
+	    // Logic for interacting with the door
+	    if (this.isLocked) {
+	        boolean keyFound = false;
+	        for (Item item : player.getInventory().getItems()) {
+	            if (item instanceof Keys) {
+	                Keys key = (Keys) item;
+	                if (this.key.equals(key)) { 
+	                    unlockWithKey(key);
+	                    keyFound = true;
+	                    break;
+	                }
+	            }
+	        }
+	        if (!keyFound) {
+	            Utilities.slowPrint("\nThe door is locked, and you don't have the right key.");
+	        }
+	    } else {
+	        Utilities.slowPrint("\nYou open the door and proceed through.");
+	    }
 	}
+
 }

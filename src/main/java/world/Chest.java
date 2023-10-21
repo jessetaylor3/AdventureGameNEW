@@ -30,6 +30,7 @@ public class Chest extends ObjectInRoom{
 			this.isLocked = false;
 			String message = "\nYou used the " + key.getName() + " to unlock the chest.";
 			Utilities.slowPrint(message);
+			return;
 		} else {
 			Utilities.slowPrint("\nThis key doesn't fit the lock.");
 		}
@@ -39,7 +40,20 @@ public class Chest extends ObjectInRoom{
 	public void interactWith(Player player, InputHandler inputHandler) {
 	    // Logic for interacting with the chest
 	    if (this.isLocked) {
-	        Utilities.slowPrint("\nThe chest is locked. You need the right key to open it.");
+	        boolean keyFound = false;
+	        for (Item item : player.getInventory().getItems()) {
+	        	if (item instanceof Keys) {
+	        		Keys key = (Keys) item;
+	        		if (this.key.equals(key)) {
+	        			unlockWithKey(key);
+	        			keyFound = true;
+	        			break;
+	        		}
+	        	}
+	        }
+	        if (!keyFound) {
+	        	Utilities.slowPrint("\nThe chest is locked, and you don't have the right key to unlock it.");
+	        }
 	    } else {
 	        // Check if the chest is empty
 	        if (this.itemsInside.isEmpty()) {
@@ -69,5 +83,4 @@ public class Chest extends ObjectInRoom{
 	        }
 	    }
 	}
-
 }

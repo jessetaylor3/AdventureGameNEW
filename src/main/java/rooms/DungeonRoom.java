@@ -47,13 +47,13 @@ public class DungeonRoom extends Room {
 		//Create items
 		Keys largeKey = new Keys("Large Key", "It describes itself.");
 		Keys smallKey = new Keys("Small Key", "It's what it says it is...");
-		Healing splint = new Healing("Splint", "a small splint used for bone fractures.", false, 0);
+		Healing splint = new Healing("Splint", "a small splint used for bone fractures.", false, 10);
 		
 		//Would use itemsInRoom for items that are accessible. All items right now are hidden
 		
 		//Put some items in chest
-		itemsInChest.add(largeKey);
 		itemsInChest.add(splint);
+		itemsInChest.add(largeKey);
 		
 		//Create objects
 		this.objectsInRoom.add(new Door("Old barred door", "heavy door with old bars and a large keyhole.", true, largeKey));
@@ -136,22 +136,22 @@ public class DungeonRoom extends Room {
 			
 			case "door":
 				//Options when at door
-				options = "TODO";
+				options = "1. Try and open it\n2. Return to the center of the room\n3. Manage Inventory";
 				break;
 				
 			case "chest":
 				//Options when at chest
-				options = "TODO";
+				options = "1. Try and open it\n2. Return to the center of the room\n3. Manage Inventory";
 				break;
 				
 			case "painting":
 				//Options when at painting
-				options = "TODO";
+				options = "1. Inspect painting\n2. Return to the center of the room\n3. Manage Inventory";
 				break;
 				
 			case "wall":
 				//Options when at brick wall
-				options = "TODO";
+				options = "1. Inspect the wall\n2. Return to the center of the room\n3. Manage Inventory";
 				break;
 				
 			default:
@@ -189,21 +189,23 @@ public class DungeonRoom extends Room {
 			switch (this.playerPosition) {
 			case "center":
 				//TODO
-				handleCenterChoices(userInput);
+				handleCenterChoices(userInput, player, inputHandler);
 				return false; //Player stays in room
 				
 			case "door":
-				//TODO
+				handleNonCenterChoices(userInput, player, inputHandler);
+				return false;
 				
 			case "chest":
-				//TODO
+				handleNonCenterChoices(userInput, player, inputHandler);
+				return false;
 				
 			case "painting":
-				//TODO
+				handleNonCenterChoices(userInput, player, inputHandler);
+				return false;
 				
 			case "wall":
-				//TODO
-				handleSpecificPositionChoices(userInput, player, inputHandler);
+				handleNonCenterChoices(userInput, player, inputHandler);
 				return false; //Player stays in room
 				
 			default:
@@ -213,6 +215,60 @@ public class DungeonRoom extends Room {
 		}
 	}
 	
+	//Handles options for user when standing in center. (Changes player position)
+	//TODO Display messages to user here?
+	private void handleCenterChoices(String userInput, Player player, InputHandler inputHandler) {
+		switch (userInput) {
+		case "1":
+			Utilities.slowPrint("You walk towards the heavy barred door.");
+			this.playerPosition = "door";
+			break;
+			
+		case "2":
+			Utilities.slowPrint("You walk towards the small steel chest.");
+			this.playerPosition = "chest";
+			break;
+			
+		case "3":
+			Utilities.slowPrint("You walk towards the old dusty painting.");
+			this.playerPosition = "painting";
+			break;
+			
+		case "4":
+			Utilities.slowPrint("You walk towards the cold brick wall.");
+			this.playerPosition = "wall";
+			break;
+			
+		case "5":
+			lookAround();
+			break;
+			
+		case "6":
+			InventoryHandler.manageInventory(player, inputHandler);
+			break;
+		}
+	}
+	
+	//Logic for player when they're standing at a side of the room
+	private void handleNonCenterChoices(String userInput, Player player, InputHandler inputHandler) {
+		if ("1".equals(userInput)) {
+			for (ObjectInRoom objectsInRoom : this.objectsInRoom) {
+				if (objectsInRoom.getName().toLowerCase().contains(this.playerPosition)) {
+					objectsInRoom.interactWith(player, inputHandler);
+					return;
+				}
+			}
+			Utilities.slowPrint("There's nothing to interact with here.");
+		} else if ("2".equals(userInput)) {
+			Utilities.slowPrint("You walk back to the center of the room.");
+			this.playerPosition = "center";
+		} else if ("3".equals(userInput)){
+			InventoryHandler.manageInventory(player, inputHandler);
+			
+		} else {
+			Utilities.slowPrint("Invalid choice. Please select again.");
+		}
+	}
 	
 	//Look around method
 	private void lookAround() {
@@ -230,7 +286,7 @@ public class DungeonRoom extends Room {
 		if ("Y".equalsIgnoreCase(inputHandler.getUserInput())) {
 			Utilities.slowPrint("\n....with a scream and a crack, you dislocate your thumb and your hands slip free!");
 			this.handcuffsOn = false;
-			player.takeDamage(10);
+			player.takeDamage(30);
 		} else {
 			Utilities.slowPrint("\nYou decide to endure... the handcuffs remain on.");
 		}

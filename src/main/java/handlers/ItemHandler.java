@@ -32,11 +32,15 @@ public class ItemHandler {
 				return;
 				
 			case "2":
+				//Item description
+				message = item.getDescription();
+				Utilities.slowPrint(message);
+			case "3":
 				//TODO -Logic for equipping items
 				//equipItem(item, player) placeholder
 				return;
 			
-			case "3":
+			case "4":
 				//Logic for dropping the item
 				player.getInventory().removeItem(item);
 				
@@ -45,7 +49,7 @@ public class ItemHandler {
 				Utilities.slowPrint(message);
 				return;
 				
-			case "4":
+			case "5":
 				//Return to previous inventory menu
 				return;
 				
