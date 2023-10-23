@@ -25,4 +25,8 @@ public abstract class Room {
 	public void enterRoom(Player player, InputHandler inputHandler) {
 		Utilities.slowPrint(description);
 	}
+	
+	public void exitRoom(Player player) {
+		//TODO
+	}
 }

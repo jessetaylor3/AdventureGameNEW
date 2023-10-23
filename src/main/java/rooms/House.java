@@ -1,5 +1,8 @@
 package rooms;
 import items.*;
+import utilities.*;
+import entities.*;
+import handlers.*;
 import java.util.List;
 import java.util.ArrayList;
 import world.*;
@@ -16,8 +19,8 @@ public class House extends Room {
 	
 	//Static method to create instance of House
 	public static House getInstance() {
-		if (single_instance = null)
-			single_instance = new DungeonRoom();
+		if (single_instance == null)
+			single_instance = new House();
 		
 		return single_instance;
 	}
@@ -42,4 +45,15 @@ public class House extends Room {
 	}
 	
 	//Method to run all
+	@Override
+	public void enterRoom(Player player, InputHandler inputHandler) {
+		Utilities.clearConsole();
+		Utilities.slowPrint(getDescription());
+		//TODO Intro()
+	}
+	
+	@Override
+	public void exitRoom(Player player) {
+		//TODO: Backyard, or dense forest
+	}
 }

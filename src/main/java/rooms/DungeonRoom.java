@@ -89,6 +89,11 @@ public class DungeonRoom extends Room {
 		}
 	}
 	
+	@Override
+	public void exitRoom(Player player) {
+		//TODO: Enter House
+	}
+	
 	//Room Introduction
 	private void intro(Player player, InputHandler inputHandler) {
 		Utilities.slowPrint("You wake up on a cold stone floor. It's dark,"
