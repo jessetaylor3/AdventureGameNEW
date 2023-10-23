@@ -90,8 +90,8 @@ public class DungeonRoom extends Room {
 	}
 	
 	@Override
-	public void exitRoom(Player player) {
-		//TODO: Enter House
+	public void exitRoom(Player player, InputHandler inputHandler) {
+		//TODO: Enter House, enter back to dungeon?
 	}
 	
 	//Room Introduction

@@ -26,7 +26,7 @@ public abstract class Room {
 		Utilities.slowPrint(description);
 	}
 	
-	public void exitRoom(Player player) {
-		//TODO
+	public void exitRoom(Player player, InputHandler inputHandler) {
+		Utilities.slowPrint("This is printing from the room Super Class");
 	}
 }

@@ -40,7 +40,6 @@ public class DragonsLair extends Room {
     	//TODO: Create objects for room
     	
     	//TODO: Put items and objects in proper Arrays
-    	System.out.println("Test line");
     }
     
     //Method to run all
@@ -50,6 +49,11 @@ public class DragonsLair extends Room {
     	Utilities.slowPrint(getDescription());
     	//TODO: INTRO, take into account room re-entering. Might be state handlers
     	
+    }
+    
+    @Override
+    public void exitRoom(Player player, InputHandler inputHandler) {
+    	Utilities.slowPrint("You leave the room");
     }
    
 }

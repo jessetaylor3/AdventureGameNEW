@@ -41,7 +41,6 @@ public class House extends Room {
 		//TODO: Create objects for room 
 		
 		//TODO: Put items and objects in proper Arrays
-		System.out.println("Test line");
 	}
 	
 	//Method to run all
@@ -53,7 +52,8 @@ public class House extends Room {
 	}
 	
 	@Override
-	public void exitRoom(Player player) {
+	public void exitRoom(Player player, InputHandler inputHandler) {
 		//TODO: Backyard, or dense forest
+		Utilities.slowPrint("You leave the room");
 	}
 }
