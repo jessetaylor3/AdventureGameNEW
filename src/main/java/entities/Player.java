@@ -6,6 +6,7 @@ import utilities.Utilities;
 
 //Player class for all player character functionality
 public class Player {
+	private int x, y; //Player position on map
 	private String name;
 	private int health;
 	private int strength;
@@ -20,6 +21,20 @@ public class Player {
 		this.strength = 10;
 		this.armor = 0;
 		this.inventory = new Inventory();
+	}
+	
+	//Set position
+	public void setPosition(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	//Getters for position
+	public int getX() {
+		return x;
+	}
+	public int getY() {
+		return y;
 	}
 	
 	//Boolean to track alive status
@@ -85,6 +100,7 @@ public class Player {
 					+ "\nCurrent health: 100");
 		}
 	}
+	
 	//Attack message
 	public String attackMessage(Enemy enemy) {
 		return "\nYou attack the " + enemy.getName() + "."; 

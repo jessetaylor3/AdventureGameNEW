@@ -25,7 +25,34 @@ public class MountainRange extends Room {
 		return single_instance;
 	}
 	
+	//MountainRange constructor
     public MountainRange() {
         super("Mountain Range", "A breathtaking range of tall mountains that seems to touch the sky.");
+        this.itemsInRoom = new ArrayList<>();
+        this.objectsInRoom = new ArrayList<>();
+        setupRoom();
+    }
+    
+    //Method to setup room
+    private void setupRoom() {
+    	//TODO: Create items in room
+    	
+    	//TODO: Create objects for room
+    	
+    	//TODO: Put items and objects in the proper arrays
+    }
+    
+    //Method to enter room(run all)
+    @Override
+    public void enterRoom(Player player, InputHandler inputHandler) {
+    	Utilities.clearConsole();
+    	Utilities.slowPrint(getDescription());
+    	//TODO: INTRO. Take into account room re-entering. State handlers
+    }
+    
+    //Method to exit room
+    @Override
+    public void exitRoom(Player player, InputHandler inputHandler) {
+    	//TODO: Crystal clearing, dragons lair
     }
 }
