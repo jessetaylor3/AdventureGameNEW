@@ -10,6 +10,7 @@ import utilities.Utilities;
 public class Backyard extends Room {
 	//Static variable single instance of type Backyard
 	private static Backyard single_instance = null;
+	private GameMap gameMap;
 	
 	//Additional properties for room
 	
@@ -18,18 +19,19 @@ public class Backyard extends Room {
 	private List<ObjectInRoom> objectsInRoom;
 	
 	//Get instance
-	public static Backyard getInstance() {
+	public static Backyard getInstance(GameMap gameMap) {
 		if (single_instance == null)
-			single_instance = new Backyard();
+			single_instance = new Backyard(gameMap);
 		
 		return single_instance;
 	}
 	
 	//Backyard constructor
-    public Backyard() {
+    private Backyard(GameMap gameMap) {
 	    super("Backyard", "A peaceful open space behind the house, filled with overgrown grass and broken gardening tools.");
 	    this.itemsInRoom = new ArrayList<>();
 	    this.objectsInRoom = new ArrayList<>();
+	    this.gameMap = gameMap;
 	    setupRoom();
     }
     
@@ -51,7 +53,7 @@ public class Backyard extends Room {
     }
     
     @Override
-    public void exitRoom(Player player, InputHandler inputHandler) {
+    public void exitRoom(Player player, InputHandler inputHandler, String direction) {
     	//TODO: Back to house?
     }
 }

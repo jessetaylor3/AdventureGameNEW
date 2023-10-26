@@ -10,6 +10,7 @@ import utilities.Utilities;
 public class DenseForest extends Room {
 	//Static variables single instance of type DenseForest
 	private static DenseForest single_instance = null;
+	private GameMap gameMap;
 	
 	//Additional properties for room
 	
@@ -18,18 +19,19 @@ public class DenseForest extends Room {
 	private List<ObjectInRoom> objectsInRoom;
 	
 	//Get instance
-	public static DenseForest getInstance() {
+	public static DenseForest getInstance(GameMap gameMap) {
 		if (single_instance == null)
-			single_instance = new DenseForest();
+			single_instance = new DenseForest(gameMap);
 		
 		return single_instance;
 	}
 	
 	//Constructor for dense forest
-    public DenseForest() {
+    private DenseForest(GameMap gameMap) {
         super("Dense Forest", "A dark, dense forest that seems to stretch on forever in every direction.");
         this.itemsInRoom = new ArrayList<>();
         this.objectsInRoom = new ArrayList<>();
+        this.gameMap = gameMap;
         setupRoom();
     }
     
@@ -52,7 +54,7 @@ public class DenseForest extends Room {
     
     //Method to exit
     @Override
-    public void exitRoom(Player player, InputHandler inputHandler) {
+    public void exitRoom(Player player, InputHandler inputHandler, String direction) {
     	//TODO: Tree nook, crystal clearing, back to House?
     }
 }

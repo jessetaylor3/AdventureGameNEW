@@ -10,6 +10,7 @@ import utilities.Utilities;
 public class DragonsLair extends Room {
 	//Static variable single_instance of type DragonsLair
 	private static DragonsLair single_instance = null;
+	private GameMap gameMap;
 	
 	//Additional properties
 	
@@ -18,18 +19,19 @@ public class DragonsLair extends Room {
 	private List<ObjectInRoom> objectsInRoom;
 	
 	//Get instance
-	public static DragonsLair getInstance() {
+	public static DragonsLair getInstance(GameMap gameMap) {
 		if (single_instance == null)
-			single_instance = new DragonsLair();
+			single_instance = new DragonsLair(gameMap);
 		
 		return single_instance;
 	}
 	
 	//Dragon Lair constructor
-    private DragonsLair() {
+    private DragonsLair(GameMap gameMap) {
         super("Dragon's Lair", "A large cavern with scorched walls, the air inside is hot and smells of sulfur.");
         this.itemsInRoom = new ArrayList<>();
         this.objectsInRoom = new ArrayList<>();
+        this.gameMap = gameMap;
         setupRoom();
     }
     
@@ -52,7 +54,7 @@ public class DragonsLair extends Room {
     }
     
     @Override
-    public void exitRoom(Player player, InputHandler inputHandler) {
+    public void exitRoom(Player player, InputHandler inputHandler, String direction) {
     	Utilities.slowPrint("You leave the room");
     }
    

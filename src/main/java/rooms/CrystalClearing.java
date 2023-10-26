@@ -10,6 +10,7 @@ import utilities.Utilities;
 public class CrystalClearing extends Room {
 	//Static variable single instance of type CrystalClearing
 	private static CrystalClearing single_instance = null;
+	private GameMap gameMap;
 	
 	//Additional properties for room
 	
@@ -18,18 +19,19 @@ public class CrystalClearing extends Room {
 	private List<ObjectInRoom> objectsInRoom;
 	
 	//Get instance
-	public static CrystalClearing getInstance() {
+	public static CrystalClearing getInstance(GameMap gameMap) {
 		if (single_instance == null)
-			single_instance = new CrystalClearing();
+			single_instance = new CrystalClearing(gameMap);
 		
 		return single_instance;
 	}
 	
 	//CrystalClearing constructor
-    public CrystalClearing() {
+    private CrystalClearing(GameMap gameMap) {
         super("Crystal Clearing", "A mesmerizing clearing in the forest where the ground is covered in sparkling crystals.");
         this.itemsInRoom = new ArrayList<>();
         this.objectsInRoom = new ArrayList<>();
+        this.gameMap = gameMap;
         setupRoom();
     }
     
@@ -50,7 +52,7 @@ public class CrystalClearing extends Room {
     }
     
     @Override
-    public void exitRoom(Player player, InputHandler inputHandler) {
+    public void exitRoom(Player player, InputHandler inputHandler, String direction) {
     	//TODO:
     }
 }

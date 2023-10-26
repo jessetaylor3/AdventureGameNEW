@@ -27,5 +27,4 @@ public class DirectionHandler {
 			throw new IllegalArgumentException("Invalid direction: " + direction);
 		}
 	}
-
 }

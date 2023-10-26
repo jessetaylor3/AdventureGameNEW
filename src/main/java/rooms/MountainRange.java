@@ -10,6 +10,7 @@ import utilities.Utilities;
 public class MountainRange extends Room {
 	//Static variable single instance of type MountainRange
 	private static MountainRange single_instance = null;
+	private GameMap gameMap;
 	
 	//Additional properties
 	
@@ -18,18 +19,19 @@ public class MountainRange extends Room {
 	private List<ObjectInRoom> objectsInRoom;
 	
 	//Get instance
-	public static MountainRange getInstance() {
+	public static MountainRange getInstance(GameMap gameMap) {
 		if (single_instance == null)
-			single_instance = new MountainRange();
+			single_instance = new MountainRange(gameMap);
 		
 		return single_instance;
 	}
 	
 	//MountainRange constructor
-    public MountainRange() {
+    private MountainRange(GameMap gameMap) {
         super("Mountain Range", "A breathtaking range of tall mountains that seems to touch the sky.");
         this.itemsInRoom = new ArrayList<>();
         this.objectsInRoom = new ArrayList<>();
+        this.gameMap = gameMap;
         setupRoom();
     }
     
@@ -52,7 +54,7 @@ public class MountainRange extends Room {
     
     //Method to exit room
     @Override
-    public void exitRoom(Player player, InputHandler inputHandler) {
+    public void exitRoom(Player player, InputHandler inputHandler, String direction) {
     	//TODO: Crystal clearing, dragons lair
     }
 }

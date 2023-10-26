@@ -2,6 +2,7 @@ package rooms;
 import utilities.*;
 import handlers.*;
 import entities.*;
+import java.util.HashMap;
 
 public abstract class Room {
 	private String description;
@@ -26,7 +27,7 @@ public abstract class Room {
 		Utilities.slowPrint(description);
 	}
 	
-	public void exitRoom(Player player, InputHandler inputHandler) {
+	public void exitRoom(Player player, InputHandler inputHandler, String direction) {
 		Utilities.slowPrint("This is printing from the room Super Class");
 	}
 }

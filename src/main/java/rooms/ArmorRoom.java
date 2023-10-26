@@ -10,6 +10,7 @@ import utilities.Utilities;
 public class ArmorRoom extends Room {
 	//Static variable single instance of type ArmorRoom
 	private static ArmorRoom single_instance = null;
+	private GameMap gameMap;
 	
 	//Additional properties
 	
@@ -18,19 +19,20 @@ public class ArmorRoom extends Room {
 	private List<ObjectInRoom> objectsInRoom;
 	
 	//Get instance
-	public static ArmorRoom getInstance() {
+	public static ArmorRoom getInstance(GameMap gameMap) {
 		if (single_instance == null)
-			single_instance = new ArmorRoom();
+			single_instance = new ArmorRoom(gameMap);
 		
 		return single_instance;
 	}
 	
 	//Armor room constructor
-    public ArmorRoom() {
+    private ArmorRoom(GameMap gameMap) {
         super("Armor Room", "A room filled with various pieces of ancient and mystical armors.");
-    this.itemsInRoom = new ArrayList<>();
-    this.objectsInRoom = new ArrayList<>();
-    setupRoom();
+	    this.itemsInRoom = new ArrayList<>();
+	    this.objectsInRoom = new ArrayList<>();
+	    this.gameMap = gameMap;
+	    setupRoom();
     }
     
     //Method to setup room
@@ -52,7 +54,7 @@ public class ArmorRoom extends Room {
     
     //Method to exit
     @Override
-    public void exitRoom(Player player, InputHandler inputHandler) {
+    public void exitRoom(Player player, InputHandler inputHandler, String direction) {
     	Utilities.clearConsole();
     	Utilities.slowPrint(getDescription());
     	//TODO: INTRO 

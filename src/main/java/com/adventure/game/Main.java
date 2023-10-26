@@ -8,6 +8,9 @@ public class Main {
 		//Initialize inputScanner
 		InputHandler inputHandler = new InputHandler();
 		
+		//Game Map
+		GameMap gameMap = new GameMap();
+		
 		//Player sets name
 		String playerName = Intro.getPlayerName(inputHandler);
 		
@@ -18,7 +21,7 @@ public class Main {
 		Intro.displayIntro(player);
 		
 		//Enter room test
-		DungeonRoom dungeonRoom = DungeonRoom.getInstance(); //Get the only instance of dungeonRoom
+		DungeonRoom dungeonRoom = DungeonRoom.getInstance(gameMap); //Get the only instance of dungeonRoom
 		dungeonRoom.enterRoom(player, inputHandler);
 		
 		

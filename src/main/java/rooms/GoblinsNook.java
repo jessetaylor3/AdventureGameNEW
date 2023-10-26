@@ -10,6 +10,7 @@ import utilities.Utilities;
 public class GoblinsNook extends Room {
 	//Static variable single instance of type Goblins
 	private static GoblinsNook single_instance = null;
+	private GameMap gameMap;
 	
 	//Additional properties for room
 	
@@ -18,18 +19,19 @@ public class GoblinsNook extends Room {
 	private List<ObjectInRoom> objectsInRoom;
 	
 	//Get instance
-	public static GoblinsNook getInstance() {
+	public static GoblinsNook getInstance(GameMap gameMap) {
 		if (single_instance == null)
-			single_instance = new GoblinsNook();
+			single_instance = new GoblinsNook(gameMap);
 		
 		return single_instance;
 	}
 	
 	//Goblins nook constructor
-    public GoblinsNook() {
+    private GoblinsNook(GameMap gameMap) {
         super("Goblin's Nook", "A messy and smelly nook, clearly the living space of untidy goblins.");
         this.itemsInRoom = new ArrayList<>();
         this.objectsInRoom = new ArrayList<>();
+        this.gameMap = gameMap;
         setupRoom();
     }
     
@@ -51,7 +53,7 @@ public class GoblinsNook extends Room {
     }
     
     @Override
-    public void exitRoom(Player player, InputHandler inputHandler) {
+    public void exitRoom(Player player, InputHandler inputHandler, String direction) {
     	//TODO: Dense Forest
     }
 }

@@ -9,6 +9,7 @@ import world.*;
 
 public class House extends Room {
 	private static House single_instance = null;
+	private GameMap gameMap;
 	
 	//Additional properties
 	private String playerPosition;
@@ -18,19 +19,20 @@ public class House extends Room {
 	private List<ObjectInRoom> objectsInRoom;
 	
 	//Static method to create instance of House
-	public static House getInstance() {
+	public static House getInstance(GameMap gameMap) {
 		if (single_instance == null)
-			single_instance = new House();
+			single_instance = new House(gameMap);
 		
 		return single_instance;
 	}
 	
 	//House constructor
-	private House() {
+	private House(GameMap gameMap) {
 		super("House", "This is an old house, with crumbling walls and a leaky roof.\nIt looks like goblins have been living here.");
 		this.itemsInRoom = new ArrayList<>();
 		this.objectsInRoom = new ArrayList<>();
 		this.playerPosition = "the top of the stairs";
+		this.gameMap = gameMap;
 		setupRoom();
 	}
 	
@@ -52,7 +54,7 @@ public class House extends Room {
 	}
 	
 	@Override
-	public void exitRoom(Player player, InputHandler inputHandler) {
+	public void exitRoom(Player player, InputHandler inputHandler, String direction) {
 		//TODO: Backyard, or dense forest
 		Utilities.slowPrint("You leave the room");
 	}

@@ -18,25 +18,29 @@ public class DungeonRoom extends Room {
 	private boolean handcuffsOn;
 	private String playerPosition; // center, door, chest, painting, wall
 	
+	//Map
+	private GameMap gameMap;
+	
 	//List for items and objects in room
 	private List<Item> itemsInRoom;
 	private List<ObjectInRoom> objectsInRoom;
 	
 	//Static method to create instance of DungeonRoom class
-	public static DungeonRoom getInstance() {
+	public static DungeonRoom getInstance(GameMap gameMap) {
 		if (single_instance == null)
-			single_instance = new DungeonRoom();
+			single_instance = new DungeonRoom(gameMap);
 		
 		return single_instance;
 	}
 	
 	//DungeonRoom Constructor
-	private DungeonRoom() {
+	private DungeonRoom(GameMap gameMap) {
 		super("Dungeon", "This is a dark and scary dungeon.");
-		this.handcuffsOn = true; //Player starts with handcuffs
+		this.handcuffsOn = false; //Player starts with handcuffs
 		this.itemsInRoom = new ArrayList<>(); //Initialize list for items in room
 		this.objectsInRoom = new ArrayList<>(); //Initialize list for objects in room
 		this.playerPosition = "center";
+		this.gameMap = gameMap;
 		setupRoom();
 	}
 	
@@ -78,6 +82,7 @@ public class DungeonRoom extends Room {
 	//THIS METHOD WILL EVENTUALLY RUN ALL ROOM METHODS
 	@Override
 	public void enterRoom(Player player, InputHandler inputHandler) {
+		player.setPosition(0, 1); //Set player to dungeonRoom coordinates
 		Utilities.clearConsole();
 		Utilities.slowPrint(getDescription());
 		intro(player, inputHandler);
@@ -90,8 +95,14 @@ public class DungeonRoom extends Room {
 	}
 	
 	@Override
-	public void exitRoom(Player player, InputHandler inputHandler) {
-		//TODO: Enter House, enter back to dungeon?
+	public void exitRoom(Player player, InputHandler inputHandler, String direction) {
+		if (direction.equals("south")) {
+			Room house = this.gameMap.getRoom(1, 1);
+			house.enterRoom(player, inputHandler);
+		} else if (direction.equals("east")) {
+			Room armorRoom = this.gameMap.getRoom(0, 2);
+			armorRoom.enterRoom(player, inputHandler);
+		}
 	}
 	
 	//Room Introduction
@@ -198,8 +209,18 @@ public class DungeonRoom extends Room {
 				return false; //Player stays in room
 				
 			case "door":
-				handleNonCenterChoices(userInput, player, inputHandler);
-				return false;
+				//Check if door is locked and if not player can exit the room
+				Door door = (Door) getObjectInRoomByName("Old barred door");
+				if (door.isLocked()) {
+					handleNonCenterChoices(userInput, player, inputHandler);
+					return false;
+				} else {
+					//Open door and exit
+					Utilities.slowPrint("You push the heavy barred door open with two"
+							+ " hands and proceed up a set of spiral stone steps");
+					exitRoom(player, inputHandler, "south");
+					return true;
+				}
 				
 			case "chest":
 				handleNonCenterChoices(userInput, player, inputHandler);
@@ -302,5 +323,14 @@ public class DungeonRoom extends Room {
 	//Getters and Setters
 	public boolean handcuffsOn() {
 		return handcuffsOn;
+	}
+	
+	private ObjectInRoom getObjectInRoomByName(String name) {
+		for (ObjectInRoom object : objectsInRoom) {
+			if (object.getName().equals(name)) {
+				return object;
+			}
+		}
+		return null; 
 	}
 }
