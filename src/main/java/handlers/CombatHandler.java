@@ -14,7 +14,7 @@ public class CombatHandler {
 		while (player.isAlive() && enemy.isAlive()) {
 			//Display combat options
 			System.out.println("\n1. Attack");
-			System.out.println("2. Attempt to flee");
+			System.out.println("2. Attempt to roach out.");
 			System.out.println("3. Use inventory item\n");
 			
 			//Get user input

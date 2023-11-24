@@ -41,6 +41,7 @@ public class Door extends ObjectInRoom{
 	                if (this.key.equals(key)) { 
 	                    unlockWithKey(key);
 	                    keyFound = true;
+	                    interactWith(player, inputHandler);
 	                    break;
 	                }
 	            }

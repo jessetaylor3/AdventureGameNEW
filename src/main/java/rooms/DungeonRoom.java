@@ -36,7 +36,7 @@ public class DungeonRoom extends Room {
 	//DungeonRoom Constructor
 	private DungeonRoom(GameMap gameMap) {
 		super("Dungeon", "This is a dark and scary dungeon.");
-		this.handcuffsOn = false; //Player starts with handcuffs
+		this.handcuffsOn = false; //Player starts WITHOUT handcuffs
 		this.itemsInRoom = new ArrayList<>(); //Initialize list for items in room
 		this.objectsInRoom = new ArrayList<>(); //Initialize list for objects in room
 		this.playerPosition = "center";
