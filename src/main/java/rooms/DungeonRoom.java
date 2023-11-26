@@ -60,7 +60,7 @@ public class DungeonRoom extends Room {
 		itemsInChest.add(largeKey);
 		
 		//Create objects
-		this.objectsInRoom.add(new Door("Old barred door", "heavy door with old bars and a large keyhole.", true, largeKey));
+		this.objectsInRoom.add(new Door("Old barred door", "heavy door with old bars and a large keyhole.", false, largeKey));
 		this.objectsInRoom.add(new Painting("Dusty Painting", "dusty painting with a faded noble figure."));
 		Chest smallChest = new Chest(
 				"Small Chest",
@@ -85,7 +85,7 @@ public class DungeonRoom extends Room {
 		player.setPosition(0, 1); //Set player to dungeonRoom coordinates
 		Utilities.clearConsole();
 		Utilities.slowPrint(getDescription());
-		intro(player, inputHandler);
+		//COMMENTED OUT TO TEST intro(player, inputHandler);
 		
 		boolean playerWantsToLeave = false;
 		while (!playerWantsToLeave) {

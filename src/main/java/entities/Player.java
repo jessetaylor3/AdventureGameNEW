@@ -13,7 +13,7 @@ public class Player {
 	private int armor;
 	private String secretPassword;
 	private Inventory inventory;
-	private EquippedItems equippedItems;
+	private Equipped equippedItems;
 
 	
 	//Player constructor
@@ -23,7 +23,7 @@ public class Player {
 		this.strength = 10;
 		this.armor = 0;
 		this.inventory = new Inventory();
-		this.equippedItems = new EquippedItems();
+		this.equippedItems = new Equipped();
 	}
 	
 	//Set position
