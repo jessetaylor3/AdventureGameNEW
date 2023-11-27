@@ -1,0 +1,26 @@
+
+{
+    "conversation_1": {
+        "start_node": "start",
+        "nodes": {
+
+            "start": {
+                "text": "Hello (name), it's nice to see you're finally awake.\n Do you remember what has happened?",
+                "choices": {
+                    "Yes, I remember everything": "node_remember",
+                    "No, I can't seem to remember anything": "node_forgot"
+                }
+            },
+
+            "node_remember": {
+                "text": "Well...uh, wish ya didn't.",
+                "next": "*the goblin chuckles*",
+                "end": true
+            },
+
+            "node_forgot": {
+                "text": "Don't worry...all will be explained soon enough."
+            }
+        }            
+    }
+}

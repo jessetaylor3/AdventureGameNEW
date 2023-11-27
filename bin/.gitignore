@@ -1,5 +1,20 @@
+<<<<<<< Updated upstream
 /entities/
 /handlers/
 /items/
 /rooms/
+=======
+/com/
+/dialogue.txt
+/dialogue/
+/entities/
+/gameText
+/handlers/
+/helpText
+/items/
+/main/
+/rooms/
+/test/
+/utilities/
+>>>>>>> Stashed changes
 /world/
