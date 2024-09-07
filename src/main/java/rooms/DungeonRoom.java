@@ -85,7 +85,11 @@ public class DungeonRoom extends Room {
 		player.setPosition(0, 1); //Set player to dungeonRoom coordinates
 		Utilities.clearConsole();
 		Utilities.slowPrint(getDescription());
+<<<<<<< Updated upstream
 		//COMMENTED OUT TO TEST intro(player, inputHandler);
+=======
+	    intro(player, inputHandler);
+>>>>>>> Stashed changes
 		
 		boolean playerWantsToLeave = false;
 		while (!playerWantsToLeave) {
